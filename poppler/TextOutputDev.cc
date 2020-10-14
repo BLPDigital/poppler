@@ -5493,6 +5493,21 @@ void TextOutputDev::endString(GfxState *state) { }
 
 void TextOutputDev::drawChar(GfxState *state, double x, double y, double dx, double dy, double originX, double originY, CharCode c, int nBytes, const Unicode *u, int uLen)
 {
+    int render;
+    bool doFill, doStroke;
+
+    // Check for invisible text
+    render = state->getRender();
+    if (render == 3) {
+        return;
+    }
+    // Check if the color will actually results in a change
+    doFill = !(render & 1) && !state->getFillColorSpace()->isNonMarking();
+    doStroke = ((render & 3) == 1 || (render & 3) == 2) && !state->getStrokeColorSpace()->isNonMarking();
+
+    if (!doFill && !doStroke) {
+        return;
+    }
     actualText->addChar(state, x, y, dx, dy, c, nBytes, u, uLen);
 }
 
