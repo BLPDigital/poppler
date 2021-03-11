@@ -13,6 +13,7 @@ RUN apt-get update \
     libopenjp2-7-dev \
     libtiff5-dev \
     libjpeg-dev \
+    libboost-all-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . /src/poppler
