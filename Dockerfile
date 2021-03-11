@@ -12,13 +12,14 @@ RUN apt-get update \
     libnss3-dev \
     libopenjp2-7-dev \
     libtiff5-dev \
-    libjpeg-dev
+    libjpeg-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . /src/poppler
 WORKDIR /src/poppler/build
 RUN cmake .. -DTESTDATADIR=/src/poppler/poppler-test \
     && make \
     && make install \
-    && ln -s /usr/local/lib/libpoppler.so.103 /usr/lib/libpoppler.so.103
+    && ln -s /usr/local/lib/libpoppler.so.108 /usr/lib/libpoppler.so.108
 
 ENTRYPOINT [ "pdftotext" ]
