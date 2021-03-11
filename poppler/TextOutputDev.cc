@@ -5417,7 +5417,8 @@ TextOutputDev::TextOutputDev(const char *fileName, bool physLayoutA, double fixe
     doHTML = false;
     textEOL = defaultEndOfLine();
     textPageBreaks = true;
-    visibleOnly = false;
+    // FIXME: default should be false in general
+    visibleOnly = true;
     ok = true;
 
     // open file
@@ -5461,7 +5462,8 @@ TextOutputDev::TextOutputDev(TextOutputFunc func, void *stream, bool physLayoutA
     actualText = new ActualText(text);
     textEOL = defaultEndOfLine();
     textPageBreaks = true;
-    visibleOnly = false;
+    // FIXME: default should be false in general
+    visibleOnly = true;
     ok = true;
 }
 
