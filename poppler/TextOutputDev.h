@@ -870,6 +870,7 @@ public:
     }
     void setTextEOL(EndOfLineKind textEOLA) { textEOL = textEOLA; }
     void setTextPageBreaks(bool textPageBreaksA) { textPageBreaks = textPageBreaksA; }
+    void setVisibleOnly(bool visibleOnlyA) { visibleOnly = visibleOnlyA; }
 
 private:
     TextOutputFunc outputFunc; // output function
@@ -889,6 +890,7 @@ private:
     bool doHTML; // extra processing for HTML conversion
     bool ok; // set up ok?
     bool textPageBreaks; // insert end-of-page markers?
+    bool visibleOnly; // render only human-visible characters ?
     EndOfLineKind textEOL; // type of EOL marker to use
 
     ActualText *actualText;

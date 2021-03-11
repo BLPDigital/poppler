@@ -80,6 +80,7 @@ static int x = 0;
 static int y = 0;
 static int w = 0;
 static int h = 0;
+static bool renderVisibleOnly = false;
 static bool bbox = false;
 static bool bboxLayout = false;
 static bool physLayout = false;
@@ -114,6 +115,7 @@ static const ArgDesc argDesc[] = { { "-f", argInt, &firstPage, 0, "first page to
                                    { "-listenc", argFlag, &printEnc, 0, "list available encodings" },
                                    { "-eol", argString, textEOLStr, sizeof(textEOLStr), "output end-of-line convention (unix, dos, or mac)" },
                                    { "-nopgbrk", argFlag, &noPageBreaks, 0, "don't insert page breaks between pages" },
+                                   { "-visibleOnly", argFlag, &renderVisibleOnly, 0, "don't render human-invisble characters (invisible/same-color fills)" },
                                    { "-bbox", argFlag, &bbox, 0, "output bounding box for each word and page size to html.  Sets -htmlmeta" },
                                    { "-bbox-layout", argFlag, &bboxLayout, 0, "like -bbox but with extra layout bounding box data.  Sets -htmlmeta" },
                                    { "-cropbox", argFlag, &useCropBox, 0, "use the crop box rather than media box" },
@@ -345,6 +347,9 @@ int main(int argc, char *argv[])
             if (noPageBreaks) {
                 textOut->setTextPageBreaks(false);
             }
+            if(renderVisibleOnly) {
+                textOut->setVisibleOnly(true);
+            }
             if (bboxLayout) {
                 printDocBBox(f, doc.get(), textOut, firstPage, lastPage);
             } else {
@@ -360,6 +365,9 @@ int main(int argc, char *argv[])
             textOut->setTextEOL(textEOL);
             if (noPageBreaks) {
                 textOut->setTextPageBreaks(false);
+            }
+            if(renderVisibleOnly) {
+                textOut->setVisibleOnly(true);
             }
             if ((w == 0) && (h == 0) && (x == 0) && (y == 0)) {
                 doc->displayPages(textOut, firstPage, lastPage, resolution, resolution, 0, true, false, false);
