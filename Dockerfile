@@ -19,8 +19,8 @@ RUN apt-get update \
 COPY . /src/poppler
 WORKDIR /src/poppler/build
 RUN cmake .. -DTESTDATADIR=/src/poppler/poppler-test \
+             -DCMAKE_INSTALL_PREFIX=/usr \
     && make \
-    && make install \
-    && ln -s /usr/local/lib/libpoppler.so.108 /usr/lib/libpoppler.so.108
+    && make install
 
 ENTRYPOINT [ "pdftotext" ]
