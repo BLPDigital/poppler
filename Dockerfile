@@ -18,8 +18,19 @@ RUN apt-get update \
 
 COPY . /src/poppler
 WORKDIR /src/poppler/build
-RUN cmake .. -DTESTDATADIR=/src/poppler/poppler-test \
-             -DCMAKE_INSTALL_PREFIX=/usr \
+RUN cmake ..  -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_INSTALL_PREFIX=/usr \
+              -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+              -DBUILD_GTK_TESTS=OFF \
+              -DBUILD_QT5_TESTS=OFF \
+              -DBUILD_QT6_TESTS=OFF \
+              -DBUILD_CPP_TESTS=OFF \
+              -DBUILD_SHARED_LIBS=ON \
+              -DENABLE_CPP=ON \
+              -DENABLE_GLIB=OFF \
+              -DENABLE_GOBJECT_INTROSPECTION=OFF \
+              -DENABLE_GTK_DOC=OFF \
+              -DENABLE_QT5=OFF \
     && make \
     && make install
 
